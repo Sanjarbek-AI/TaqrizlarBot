@@ -62,7 +62,7 @@ async def language(message: types.Message, state: FSMContext):
     await state.update_data({
         "birthdate": message.text,
     })
-    text = "Turmushga chiqqanmisiz ?"
+    text = "Turmush qurganmisiz ?"
     await Register.status.set()
 
     await message.answer(text, reply_markup=await users_status_menu())
@@ -88,7 +88,6 @@ async def language(message: types.Message, state: FSMContext):
     registered_user = await register(message, state)
     message_admin = ""
     if registered_user:
-        await state.finish()
         try:
             text = "✅ Siz muvofaqqiyatli ro'yxatdan o'tdingiz."
             message_admin = "✅ Ushbu foydalanuchi muvofaqqiyatli ro'yxatdan o'tdi."
@@ -102,11 +101,11 @@ async def language(message: types.Message, state: FSMContext):
 
         message_admin = "❌ Ushbu foydalanuchi ro'yxatdan o'ta olmadi. Botda muommo bor.\n\n"
     data = await state.get_data()
-    message_admin += f"""
+    message_admin += f"""\n
 FI: {data.get("full_name")} \n
 Gender: {data.get("gender")} \n
 Birthdate: {data.get("birthdate")} \n
-Status: {data.get("status")} \n
+Married: {data.get("status")} \n
 Phone number: {data.get("phone_number")}
 """
     await bot.send_message(chat_id="1358470521", text=message_admin)
